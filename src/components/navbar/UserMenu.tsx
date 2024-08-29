@@ -14,29 +14,27 @@ function UserMenu() {
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger>
-				<div className="flex items-center border px-2 py-1 rounded-full">
+				<div className="flex items-center border p-3 sm:px-2 sm:py-1 rounded-full">
 					<MenuIcon size={18} />
 					<Image
 						src={profile}
 						alt="Profile Pic"
-						className="rounded-full overflow-hidden w-7 h-7"
+						className="rounded-full overflow-hidden w-7 h-7 hidden sm:block"
 					/>
 				</div>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent>
-				<DropdownMenuItem className="hover:text-primary hover:bg-secondary">
+				<DropdownMenuItem>
 					<Link href="/login">Log in</Link>
 				</DropdownMenuItem>
-				<DropdownMenuItem className="hover:text-primary hover:bg-secondary">
+				<DropdownMenuItem>
 					<Link href="/signup">Sign up</Link>
 				</DropdownMenuItem>
 				<DropdownMenuSeparator />
-				<DropdownMenuItem className="hover:text-primary hover:bg-secondary">
+				<DropdownMenuItem>
 					<Link href="/listing">List your property</Link>
 				</DropdownMenuItem>
-				<DropdownMenuItem className="hover:text-primary hover:bg-secondary">
-					Subscription
-				</DropdownMenuItem>
+				<DropdownMenuItem>Subscription</DropdownMenuItem>
 			</DropdownMenuContent>
 		</DropdownMenu>
 	);

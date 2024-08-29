@@ -8,8 +8,8 @@ import UserMenu from "./UserMenu";
 function Navbar() {
 	return (
 		<header className="bg-white border-b h-16 flex items-center">
-			<nav className="max-w-[1366px] mx-auto w-full flex items-center justify-between">
-				<Link href="/" className="flex items-center gap-1">
+			<nav className="max-w-[1280px] mx-auto w-full flex items-center justify-between px-4 xl:px-0 gap-4 sm:gap-0">
+				<Link href="/" className="hidden items-center gap-1 sm:flex">
 					<Image
 						src={logo}
 						alt="NatureNest Logo"
@@ -21,8 +21,10 @@ function Navbar() {
 				</Link>
 				<Search />
 				<div className="flex items-center gap-4">
-					<Button variant="outline">List your property</Button>
-					<Link href="/login">
+					<Button variant="outline" className="hidden lg:block">
+						List your property
+					</Button>
+					<Link href="/login" className="hidden lg:block">
 						<Button variant="link">Login</Button>
 					</Link>
 					<UserMenu />
