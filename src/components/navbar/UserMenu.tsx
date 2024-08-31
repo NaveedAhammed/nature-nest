@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import {
 	DropdownMenu,
@@ -9,8 +11,15 @@ import {
 import { MenuIcon } from "lucide-react";
 import profile from "@/assets/profile.jpeg";
 import Image from "next/image";
+import React from "react";
+import { signOut } from "next-auth/react";
+import { SafeUser } from "@/types";
 
-function UserMenu() {
+interface UserMenuProps {
+	currentUser?: SafeUser | null;
+}
+
+function UserMenu({ currentUser }: UserMenuProps) {
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger>
@@ -24,17 +33,43 @@ function UserMenu() {
 				</div>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent>
-				<DropdownMenuItem>
-					<Link href="/login">Log in</Link>
-				</DropdownMenuItem>
-				<DropdownMenuItem>
-					<Link href="/signup">Sign up</Link>
-				</DropdownMenuItem>
+				{!currentUser ? (
+					<React.Fragment>
+						<DropdownMenuItem>
+							<Link href="/login">Log in</Link>
+						</DropdownMenuItem>
+						<DropdownMenuItem>
+							<Link href="/signup">Sign up</Link>
+						</DropdownMenuItem>
+					</React.Fragment>
+				) : (
+					<React.Fragment>
+						<DropdownMenuItem>
+							<Link href="/bookings">Bookings</Link>
+						</DropdownMenuItem>
+						<DropdownMenuItem>
+							<Link href="/wishlists">Wishlists</Link>
+						</DropdownMenuItem>
+					</React.Fragment>
+				)}
 				<DropdownMenuSeparator />
 				<DropdownMenuItem>
 					<Link href="/listing">List your property</Link>
 				</DropdownMenuItem>
-				<DropdownMenuItem>Subscription</DropdownMenuItem>
+				{currentUser && (
+					<DropdownMenuItem>
+						<Link href="/account">Account</Link>
+					</DropdownMenuItem>
+				)}
+				<DropdownMenuItem>Help center</DropdownMenuItem>
+				{currentUser && (
+					<React.Fragment>
+						<DropdownMenuSeparator />
+						<DropdownMenuItem onClick={() => signOut()}>
+							Log out
+						</DropdownMenuItem>
+					</React.Fragment>
+				)}
 			</DropdownMenuContent>
 		</DropdownMenu>
 	);

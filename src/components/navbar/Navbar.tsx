@@ -4,8 +4,13 @@ import logo from "@/assets/logo.svg";
 import { Button } from "../ui/button";
 import Search from "./Search";
 import UserMenu from "./UserMenu";
+import { SafeUser } from "@/types";
 
-function Navbar() {
+interface NavbarProps {
+	currentUser?: SafeUser | null;
+}
+
+function Navbar({ currentUser }: NavbarProps) {
 	return (
 		<header className="bg-white border-b h-16 flex items-center">
 			<nav className="max-w-[1280px] mx-auto w-full flex items-center justify-between px-4 xl:px-0 gap-4 sm:gap-0">
@@ -24,10 +29,12 @@ function Navbar() {
 					<Button variant="outline" className="hidden lg:block">
 						List your property
 					</Button>
-					<Link href="/login" className="hidden lg:block">
-						<Button variant="link">Login</Button>
-					</Link>
-					<UserMenu />
+					{!currentUser && (
+						<Link href="/login" className="hidden lg:block">
+							<Button variant="link">Login</Button>
+						</Link>
+					)}
+					<UserMenu currentUser={currentUser} />
 				</div>
 			</nav>
 		</header>

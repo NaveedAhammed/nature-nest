@@ -11,7 +11,6 @@ import {
 import {
 	Form,
 	FormControl,
-	FormDescription,
 	FormField,
 	FormItem,
 	FormLabel,
@@ -19,12 +18,43 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
+import { useToast } from "@/hooks/use-toast";
+import { signUpSchema, SignUpSchema } from "@/lib/validations";
+import axios from "axios";
 import Link from "next/link";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 function SignUp() {
-	const form = useForm();
+	const [isLoading, setIsLoading] = useState(false);
+	const { toast } = useToast();
+	const form = useForm<SignUpSchema>({
+		defaultValues: {
+			email: "",
+			password: "",
+		},
+		resolver: zodResolver(signUpSchema),
+	});
+
+	function onSubmit(data: SignUpSchema) {
+		setIsLoading(true);
+		axios
+			.post("/api/register", data)
+			.then((res) => {
+				console.log(res.data);
+				toast({
+					title: "Logged in successfully",
+				});
+			})
+			.catch((err) => {
+				console.log(err);
+			})
+			.finally(() => {
+				setIsLoading(false);
+			});
+	}
 
 	return (
 		<main className="h-[calc(100vh-4rem)] w-full max-w-[1280px] flex items-center mx-auto">
@@ -46,102 +76,59 @@ function SignUp() {
 					</CardHeader>
 					<CardContent>
 						<Form {...form}>
-							<FormField
-								control={form.control}
-								name="username"
-								render={() => (
-									<FormItem>
-										<FormLabel />
-										<FormControl>
-											<FormField
-												control={form.control}
-												name="username"
-												render={({ field }) => (
-													<FormItem>
-														<FormLabel>
-															Username
-														</FormLabel>
-														<FormControl>
-															<Input
-																placeholder="Mark Doe"
-																{...field}
-															/>
-														</FormControl>
-														<FormMessage />
-													</FormItem>
-												)}
-											/>
-										</FormControl>
-										<FormDescription />
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-							<FormField
-								control={form.control}
-								name="email"
-								render={() => (
-									<FormItem>
-										<FormLabel />
-										<FormControl>
-											<FormField
-												control={form.control}
-												name="email"
-												render={({ field }) => (
-													<FormItem>
-														<FormLabel>
-															Email
-														</FormLabel>
-														<FormControl>
-															<Input
-																placeholder="mark@example.com"
-																{...field}
-															/>
-														</FormControl>
-														<FormMessage />
-													</FormItem>
-												)}
-											/>
-										</FormControl>
-										<FormDescription />
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-							<FormField
-								control={form.control}
-								name="password"
-								render={() => (
-									<FormItem>
-										<FormLabel />
-										<FormControl>
-											<FormField
-												control={form.control}
-												name="password"
-												render={({ field }) => (
-													<FormItem>
-														<FormLabel>
-															Password
-														</FormLabel>
-														<FormControl>
-															<Input
-																placeholder="password"
-																{...field}
-															/>
-														</FormControl>
-														<FormMessage />
-													</FormItem>
-												)}
-											/>
-										</FormControl>
-										<FormDescription />
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-							<Button className="w-full mt-4" type="submit">
-								Continue
-							</Button>
+							<form onSubmit={form.handleSubmit(onSubmit)}>
+								<FormField
+									control={form.control}
+									name="username"
+									render={({ field }) => (
+										<FormItem>
+											<FormLabel>Username</FormLabel>
+											<FormControl>
+												<Input
+													placeholder="Mark Doe"
+													{...field}
+												/>
+											</FormControl>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+								<FormField
+									control={form.control}
+									name="email"
+									render={({ field }) => (
+										<FormItem>
+											<FormLabel>Email</FormLabel>
+											<FormControl>
+												<Input
+													placeholder="mark@example.com"
+													{...field}
+												/>
+											</FormControl>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+								<FormField
+									control={form.control}
+									name="password"
+									render={({ field }) => (
+										<FormItem>
+											<FormLabel>Password</FormLabel>
+											<FormControl>
+												<Input
+													placeholder="password"
+													{...field}
+												/>
+											</FormControl>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+								<Button className="w-full mt-4" type="submit">
+									Continue
+								</Button>
+							</form>
 						</Form>
 						<Separator className="my-4" />
 						<Button

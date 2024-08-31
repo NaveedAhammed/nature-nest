@@ -4,6 +4,8 @@ import "./globals.css";
 
 import { cn } from "@/lib/utils";
 import Navbar from "@/components/navbar/Navbar";
+import { Toaster } from "@/components/ui/toaster";
+import getCurrentUser from "./actions/getCurrentUser";
 
 const fontSans = FontSans({
 	subsets: ["latin"],
@@ -19,11 +21,13 @@ export const metadata: Metadata = {
 		"This app helps you discover the best nature spots around you.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
 	children,
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
+	const currentUser = await getCurrentUser();
+
 	return (
 		<html lang="en">
 			<body
@@ -32,8 +36,9 @@ export default function RootLayout({
 					fontSans.variable
 				)}
 			>
-				<Navbar />
+				<Navbar currentUser={currentUser} />
 				{children}
+				<Toaster />
 			</body>
 		</html>
 	);

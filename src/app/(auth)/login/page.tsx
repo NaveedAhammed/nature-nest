@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { signIn } from "next-auth/react";
 import {
 	Card,
 	CardContent,
@@ -11,7 +12,6 @@ import {
 import {
 	Form,
 	FormControl,
-	FormDescription,
 	FormField,
 	FormItem,
 	FormLabel,
@@ -20,11 +20,45 @@ import {
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
+import { useToast } from "@/hooks/use-toast";
+import { loginSchema, LoginSchema } from "@/lib/validations";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { usePathname } from "next/navigation";
 
 function Login() {
-	const form = useForm();
+	const [isLoading, setIsLoading] = useState(false);
+	const { toast } = useToast();
+	const pathname = usePathname();
+	const form = useForm<LoginSchema>({
+		defaultValues: {
+			email: "",
+			password: "",
+		},
+		resolver: zodResolver(loginSchema),
+	});
+
+	function onSubmit(data: LoginSchema) {
+		setIsLoading(true);
+		signIn("credentials", {
+			...data,
+			redirect: true,
+			callbackUrl: pathname,
+		})
+			.then((callback) => {
+				console.log(callback);
+				if (callback?.ok) {
+					toast({
+						title: "Logged in successfully",
+					});
+				}
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	}
 
 	return (
 		<main className="h-[calc(100vh-4rem)] w-full max-w-[1280px] flex items-center mx-auto">
@@ -45,77 +79,50 @@ function Login() {
 					</CardHeader>
 					<CardContent>
 						<Form {...form}>
-							<FormField
-								control={form.control}
-								name="..."
-								render={() => (
-									<FormItem>
-										<FormLabel />
-										<FormControl>
-											<FormField
-												control={form.control}
-												name="email"
-												render={({ field }) => (
-													<FormItem>
-														<FormLabel>
-															Email
-														</FormLabel>
-														<FormControl>
-															<Input
-																placeholder="mark@example.com"
-																{...field}
-															/>
-														</FormControl>
-														<FormMessage />
-													</FormItem>
-												)}
-											/>
-										</FormControl>
-										<FormDescription />
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-							<FormField
-								control={form.control}
-								name="..."
-								render={() => (
-									<FormItem>
-										<FormLabel />
-										<FormControl>
-											<FormField
-												control={form.control}
-												name="password"
-												render={({ field }) => (
-													<FormItem>
-														<FormLabel>
-															Password
-														</FormLabel>
-														<FormControl>
-															<Input
-																placeholder="password"
-																{...field}
-															/>
-														</FormControl>
-														<FormMessage />
-													</FormItem>
-												)}
-											/>
-										</FormControl>
-										<FormDescription />
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-							<Button className="w-full mt-4" type="submit">
-								Continue
-							</Button>
+							<form onSubmit={form.handleSubmit(onSubmit)}>
+								<FormField
+									control={form.control}
+									name="email"
+									render={({ field }) => (
+										<FormItem>
+											<FormLabel>Email</FormLabel>
+											<FormControl>
+												<Input
+													placeholder="mark@example.com"
+													{...field}
+												/>
+											</FormControl>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+								<FormField
+									control={form.control}
+									name="password"
+									render={({ field }) => (
+										<FormItem>
+											<FormLabel>Password</FormLabel>
+											<FormControl>
+												<Input
+													placeholder="password"
+													{...field}
+												/>
+											</FormControl>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+								<Button className="w-full mt-4" type="submit">
+									Continue
+								</Button>
+							</form>
 						</Form>
 						<Separator className="my-4" />
 						<Button
 							variant="outline"
 							className="w-full mt-4 flex items-center gap-4"
 							type="submit"
+							onClick={() => signIn("google")}
 						>
 							<FcGoogle size={18} />
 							Continue with Google
