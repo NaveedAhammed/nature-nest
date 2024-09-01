@@ -67,3 +67,10 @@
 		@apply bg-background text-foreground;
 	}
 }
+
+.leaflet-bootom,
+.leaflet-control,
+.leaflet-pane,
+.leaflet-top {
+	z-index: 0 !important;
+}

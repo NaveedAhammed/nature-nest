@@ -5,6 +5,7 @@ import { Button } from "../ui/button";
 import Search from "./Search";
 import UserMenu from "./UserMenu";
 import { SafeUser } from "@/types";
+import RentModal from "../modals/RentModal";
 
 interface NavbarProps {
 	currentUser?: SafeUser | null;
@@ -26,9 +27,7 @@ function Navbar({ currentUser }: NavbarProps) {
 				</Link>
 				<Search />
 				<div className="flex items-center gap-4">
-					<Button variant="outline" className="hidden lg:block">
-						List your property
-					</Button>
+					<RentModal />
 					{!currentUser && (
 						<Link href="/login" className="hidden lg:block">
 							<Button variant="link">Login</Button>

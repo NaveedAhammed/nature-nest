@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import Navbar from "@/components/navbar/Navbar";
 import { Toaster } from "@/components/ui/toaster";
 import getCurrentUser from "./actions/getCurrentUser";
+import Categories from "@/components/categories/Categories";
 
 const fontSans = FontSans({
 	subsets: ["latin"],
@@ -37,6 +38,7 @@ export default async function RootLayout({
 				)}
 			>
 				<Navbar currentUser={currentUser} />
+				<Categories />
 				{children}
 				<Toaster />
 			</body>

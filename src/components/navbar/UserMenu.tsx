@@ -20,16 +20,22 @@ interface UserMenuProps {
 }
 
 function UserMenu({ currentUser }: UserMenuProps) {
+	const profileSrc = currentUser?.image ?? profile;
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger>
-				<div className="flex items-center border p-3 sm:px-2 sm:py-1 rounded-full">
+				<div className="flex items-center border p-3 sm:px-2 sm:py-1 gap-1 rounded-full">
 					<MenuIcon size={18} />
-					<Image
-						src={profile}
-						alt="Profile Pic"
-						className="rounded-full overflow-hidden w-7 h-7 hidden sm:block"
-					/>
+					<div className="relative rounded-full overflow-hidden w-7 h-7 hidden sm:block">
+						<Image
+							src={profileSrc}
+							alt="Profile Pic"
+							fill
+							style={{
+								objectFit: "cover",
+							}}
+						/>
+					</div>
 				</div>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent>
