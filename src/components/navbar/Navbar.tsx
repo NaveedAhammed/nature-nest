@@ -27,7 +27,9 @@ function Navbar({ currentUser }: NavbarProps) {
 				</Link>
 				<Search />
 				<div className="flex items-center gap-4">
-					<RentModal />
+					<Link href="/listing">
+						<Button variant="outline">List your property</Button>
+					</Link>
 					{!currentUser && (
 						<Link href="/login" className="hidden lg:block">
 							<Button variant="link">Login</Button>

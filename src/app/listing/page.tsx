@@ -12,6 +12,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import axios from "axios";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
@@ -27,6 +28,7 @@ enum STEPS {
 function Listing() {
 	const [step, setStep] = useState(STEPS.CATEGORY);
 	const [isLoading, setIsLoading] = useState(false);
+	const router = useRouter();
 
 	const { toast } = useToast();
 
@@ -95,6 +97,7 @@ function Listing() {
 				});
 				reset();
 				setStep(STEPS.CATEGORY);
+				router.push("/");
 			})
 			.catch((err) => {
 				console.error(err);
