@@ -7,8 +7,8 @@ import { useRouter } from "next/navigation";
 import { useCallback, useMemo } from "react";
 import { format } from "date-fns";
 import Image from "next/image";
-import HeartButton from "./HeartButton";
-import { Button } from "./ui/button";
+import HeartButton from "../HeartButton";
+import { Button } from "../ui/button";
 
 interface ListingCardProps {
 	data: Listing;

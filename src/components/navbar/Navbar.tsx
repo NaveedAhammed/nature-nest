@@ -5,7 +5,6 @@ import { Button } from "../ui/button";
 import Search from "./Search";
 import UserMenu from "./UserMenu";
 import { SafeUser } from "@/types";
-import RentModal from "../modals/RentModal";
 
 interface NavbarProps {
 	currentUser?: SafeUser | null;
