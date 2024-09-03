@@ -28,7 +28,7 @@ function ListingHead({
 		<div className="flex flex-col">
 			<h1 className="text-2xl font-semibold">{title}</h1>
 			<p>{`${location?.region}, ${location?.label}`}</p>
-			<div className="w-full h-[60vh] overflow-hidden rounded-xl relative">
+			<div className="w-full h-[60vh] overflow-hidden rounded-xl relative mt-4">
 				<Image
 					alt="Image"
 					src={imageSrc}

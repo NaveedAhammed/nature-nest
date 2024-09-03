@@ -46,11 +46,11 @@ function ListingInfo({
 	const profileSrc = user?.image ?? profile;
 
 	return (
-		<div className="col-span-4 flex flex-col gap-8">
+		<div className="col-span-4 flex flex-col gap-4">
 			<div className="flex flex-col gap-2">
 				<div className="text-xl font-semibold flex items-center gap-2">
 					<div>Hosted by {user?.name}</div>
-					<div className="w-12 h-12 rounded-full overflow-hidden relative">
+					<div className="w-8 h-8 rounded-full overflow-hidden relative">
 						<Image
 							src={profileSrc}
 							alt="Profile Pic"
