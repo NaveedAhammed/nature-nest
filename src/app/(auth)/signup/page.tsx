@@ -34,6 +34,7 @@ function SignUp() {
 		defaultValues: {
 			email: "",
 			password: "",
+			name: "",
 		},
 		resolver: zodResolver(signUpSchema),
 	});
@@ -79,7 +80,7 @@ function SignUp() {
 							<form onSubmit={form.handleSubmit(onSubmit)}>
 								<FormField
 									control={form.control}
-									name="username"
+									name="name"
 									render={({ field }) => (
 										<FormItem>
 											<FormLabel>Username</FormLabel>
@@ -125,7 +126,11 @@ function SignUp() {
 										</FormItem>
 									)}
 								/>
-								<Button className="w-full mt-4" type="submit">
+								<Button
+									className="w-full mt-4"
+									type="submit"
+									disabled={isLoading}
+								>
 									Continue
 								</Button>
 							</form>
@@ -135,6 +140,7 @@ function SignUp() {
 							variant="outline"
 							className="w-full mt-4 flex items-center gap-4"
 							type="submit"
+							disabled={isLoading}
 						>
 							<FcGoogle size={18} />
 							Continue with Google

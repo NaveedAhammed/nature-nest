@@ -112,7 +112,11 @@ function Login() {
 										</FormItem>
 									)}
 								/>
-								<Button className="w-full mt-4" type="submit">
+								<Button
+									className="w-full mt-4"
+									type="submit"
+									disabled={isLoading}
+								>
 									Continue
 								</Button>
 							</form>
@@ -123,6 +127,7 @@ function Login() {
 							className="w-full mt-4 flex items-center gap-4"
 							type="submit"
 							onClick={() => signIn("google")}
+							disabled={isLoading}
 						>
 							<FcGoogle size={18} />
 							Continue with Google
