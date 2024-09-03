@@ -51,10 +51,10 @@ function UserMenu({ currentUser }: UserMenuProps) {
 				) : (
 					<React.Fragment>
 						<DropdownMenuItem>
-							<Link href="/bookings">Bookings</Link>
+							<Link href="/trips">My Trips</Link>
 						</DropdownMenuItem>
 						<DropdownMenuItem>
-							<Link href="/wishlists">Wishlists</Link>
+							<Link href="/reservations">My Reservations</Link>
 						</DropdownMenuItem>
 					</React.Fragment>
 				)}

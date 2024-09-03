@@ -1,8 +1,7 @@
 "use client";
 
 import useCountries from "@/hooks/useCountries";
-import { SafeUser } from "@/types";
-import { Listing, Reservation } from "@prisma/client";
+import { SafeListing, SafeReservation, SafeUser } from "@/types";
 import { useRouter } from "next/navigation";
 import { useCallback, useMemo } from "react";
 import { format } from "date-fns";
@@ -11,8 +10,8 @@ import HeartButton from "../HeartButton";
 import { Button } from "../ui/button";
 
 interface ListingCardProps {
-	data: Listing;
-	reservation?: Reservation;
+	data: SafeListing;
+	reservation?: SafeReservation;
 	onAction?: (id: string) => void;
 	disabled?: boolean;
 	actionLabel?: string;
@@ -84,7 +83,7 @@ function ListingCard({
 				<div className="font-semibold text-lg">
 					{location?.region}, {location?.label}
 				</div>
-				<div className="font-light text-neutral-500">
+				<div className="text-neutral-600 text-sm mb-2">
 					{reservationDate || data.category}
 				</div>
 				<div className="flex items-center gap-1">
@@ -92,7 +91,12 @@ function ListingCard({
 					{!reservation && <div className="font-light">night</div>}
 				</div>
 				{onAction && actionLabel && (
-					<Button disabled size="sm" onClick={handleCancel}>
+					<Button
+						disabled={disabled}
+						size="sm"
+						onClick={handleCancel}
+						className="mt-2"
+					>
 						{actionLabel}
 					</Button>
 				)}

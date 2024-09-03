@@ -5,8 +5,7 @@ import ListingHead from "@/components/listings/ListingHead";
 import ListingInfo from "@/components/listings/ListingInfo";
 import ListingReservation from "@/components/listings/ListingReservation";
 import { useToast } from "@/hooks/use-toast";
-import { SafeUser } from "@/types";
-import { Listing, Reservation } from "@prisma/client";
+import { SafeListing, SafeReservation, SafeUser } from "@/types";
 import axios from "axios";
 import { differenceInCalendarDays, eachDayOfInterval } from "date-fns";
 import { useRouter } from "next/navigation";
@@ -14,8 +13,8 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { Range } from "react-date-range";
 
 interface ListingDetailsProps {
-	reservations?: Reservation[];
-	listing: Listing & {
+	reservations?: SafeReservation[];
+	listing: SafeListing & {
 		user: SafeUser;
 	};
 	currentUser?: SafeUser | null;
@@ -73,6 +72,7 @@ function ListingDetails({
 					title: "Listing reserved!",
 				});
 				setDateRange(initialDateRange);
+				router.push("/trips");
 				router.refresh();
 			})
 			.catch((err) => {
