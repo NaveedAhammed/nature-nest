@@ -5,6 +5,7 @@ import { Button } from "../ui/button";
 import Search from "./Search";
 import UserMenu from "./UserMenu";
 import { SafeUser } from "@/types";
+import SearchModal from "../modals/SearchModal";
 
 interface NavbarProps {
 	currentUser?: SafeUser | null;
@@ -24,7 +25,7 @@ function Navbar({ currentUser }: NavbarProps) {
 						NatureNest
 					</span>
 				</Link>
-				<Search />
+				<SearchModal />
 				<div className="flex items-center gap-4">
 					<Link href="/listing">
 						<Button variant="outline">List your property</Button>

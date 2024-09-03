@@ -54,6 +54,9 @@ function UserMenu({ currentUser }: UserMenuProps) {
 							<Link href="/trips">My Trips</Link>
 						</DropdownMenuItem>
 						<DropdownMenuItem>
+							<Link href="/favorites">My Favorites</Link>
+						</DropdownMenuItem>
+						<DropdownMenuItem>
 							<Link href="/reservations">My Reservations</Link>
 						</DropdownMenuItem>
 					</React.Fragment>
@@ -63,9 +66,14 @@ function UserMenu({ currentUser }: UserMenuProps) {
 					<Link href="/listing">List your property</Link>
 				</DropdownMenuItem>
 				{currentUser && (
-					<DropdownMenuItem>
-						<Link href="/account">Account</Link>
-					</DropdownMenuItem>
+					<React.Fragment>
+						<DropdownMenuItem>
+							<Link href="/account">Account</Link>
+						</DropdownMenuItem>
+						<DropdownMenuItem>
+							<Link href="/properties">My Properties</Link>
+						</DropdownMenuItem>
+					</React.Fragment>
 				)}
 				<DropdownMenuItem>Help center</DropdownMenuItem>
 				{currentUser && (
